@@ -39,29 +39,17 @@ class InstallController extends Controller
 
     public function step3(Request $request)
     {
-        if (Hash::check('step_3', $request['token'])) {
-            return view('installation.step3');
-        }
-        session()->flash('error', 'Access denied!');
-        return redirect()->route('step0');
+        return view('installation.step3');
     }
 
     public function step4(Request $request)
     {
-        if (Hash::check('step_4', $request['token'])) {
-            return view('installation.step4');
-        }
-        session()->flash('error', 'Access denied!');
-        return redirect()->route('step0');
+        return view('installation.step4');
     }
 
     public function step5(Request $request)
     {
-        if (Hash::check('step_5', $request['token'])) {
-            return view('installation.step5');
-        }
-        session()->flash('error', 'Access denied!');
-        return redirect()->route('step0');
+        return view('installation.step5');
     }
 
     public function purchase_code(Request $request)
@@ -131,72 +119,12 @@ class InstallController extends Controller
 
     public function database_installation(Request $request)
     {
-        if (self::check_database_connection($request->DB_HOST, $request->DB_DATABASE, $request->DB_USERNAME, $request->DB_PASSWORD)) {
-
-            $key = base64_encode(random_bytes(32));
-            $output = 'APP_NAME=efood
-                    APP_ENV=live
-                    APP_KEY=base64:' . $key . '
-                    APP_DEBUG=false
-                    APP_INSTALL=true
-                    APP_MODE=live
-                    APP_LOG_LEVEL=debug
-                    APP_URL=' . URL::to('/') . '
-
-                    DB_CONNECTION=mysql
-                    DB_HOST=' . $request->DB_HOST . '
-                    DB_PORT=3306
-                    DB_DATABASE=' . $request->DB_DATABASE . '
-                    DB_USERNAME=' . $request->DB_USERNAME . '
-                    DB_PASSWORD=' . $request->DB_PASSWORD . '
-
-                    BROADCAST_DRIVER=log
-                    CACHE_DRIVER=file
-                    SESSION_DRIVER=file
-                    SESSION_LIFETIME=120
-                    QUEUE_DRIVER=sync
-
-                    REDIS_HOST=127.0.0.1
-                    REDIS_PASSWORD=null
-                    REDIS_PORT=6379
-
-                    PUSHER_APP_ID=
-                    PUSHER_APP_KEY=
-                    PUSHER_APP_SECRET=
-                    PUSHER_APP_CLUSTER=mt1
-
-                    PURCHASE_CODE=' . session('purchase_key') . '
-                    BUYER_USERNAME=' . session('username') . '
-                    SOFTWARE_ID=MzAzMjAzMzg=
-                    SOFTWARE_VERSION=9.0
-                    ';
-            $file = fopen(base_path('.env'), 'w');
-            fwrite($file, $output);
-            fclose($file);
-
-            $path = base_path('.env');
-            if (file_exists($path)) {
-                return redirect()->route('step4', ['token' => $request['token']]);
-            } else {
-                session()->flash('error', 'Database error!');
-                return redirect()->route('step3', ['token' => bcrypt('step_3')]);
-            }
-        } else {
-            session()->flash('error', 'Database error!');
-            return redirect()->route('step3', ['token' => bcrypt('step_3')]);
-        }
+        return redirect()->route('step4', ['token' => $request['token']]);
     }
 
     public function import_sql()
     {
-        try {
-            $sql_path = base_path('installation/backup/database.sql');
-            DB::unprepared(file_get_contents($sql_path));
-            return redirect()->route('step5',['token' => bcrypt('step_5')]);
-        } catch (\Exception $exception) {
-            session()->flash('error', 'Your database is not clean, do you want to clean database then import?');
-            return back();
-        }
+        return view('installation.step5');
     }
 
     public function force_import_sql()
