@@ -6,6 +6,7 @@ use App\CentralLogics\Helpers;
 use App\Http\Controllers\Controller;
 use App\Model\Admin;
 use App\Model\Branch;
+use App\Model\Client;
 use App\Model\Category;
 use App\Model\Order;
 use App\Model\OrderDetail;
@@ -62,6 +63,8 @@ class DashboardController extends Controller
         $data = self::order_stats_data();
 
         $data['customer'] = User::count();
+        $data['clients'] = Client::count();
+
         $data['product'] = Product::count();
         $data['order'] = Order::count();
         $data['category'] = Category::where('parent_id', 0)->count();

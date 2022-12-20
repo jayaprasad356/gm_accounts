@@ -36,6 +36,7 @@
         "razorpay/razorpay": "^2.5",
         "signalwire/signalwire": "^2.3",
         "stripe/stripe-php": "^7.61",
+        "symfony/symfony": "5.4.x",
         "twilio/sdk": "^6.28",
         "unicodeveloper/laravel-paystack": "^1.0"
     },

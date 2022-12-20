@@ -1,14 +1,14 @@
-@foreach($products as $key=>$product)
+@foreach($clients as $key=>$client)
     <tr>
         <td>{{$key+1}}</td>
         <td>
                                         <span class="d-block font-size-sm text-body">
-                                             <a href="{{route('admin.product.view',[$product['id']])}}">
-                                               {{$product['name']}}
+                                             <a href="{{route('admin.client.view',[$client['id']])}}">
+                                               {{$client['name']}}
                                              </a>
                                         </span>
         </td>
-        <td>
+        <!-- <td>
             <div style="height: 100px; width: 100px; overflow-x: hidden;overflow-y: hidden">
                 <img src="{{asset('storage/app/public/product')}}/{{$product['image']}}" style="width: 100px"
                      onerror="this.src='{{asset('public/assets/admin/img/160x160/img2.jpg')}}'">
@@ -27,7 +27,7 @@
                 </div>
             @endif
         </td>
-        <td>{{ \App\CentralLogics\Helpers::set_symbol($product['price']) }}</td>
+        <td>{{ \App\CentralLogics\Helpers::set_symbol($product['price']) }}</td> -->
         <td>
             <!-- Dropdown -->
             <div class="dropdown">

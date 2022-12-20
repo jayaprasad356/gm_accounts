@@ -17,6 +17,21 @@ Route::group(['namespace' => 'Admin', 'as' => 'admin.'], function () {
     });
     /*authentication*/
 
+
+    /*clients*/
+    Route::group(['prefix' => 'client', 'as' => 'client.', 'middleware' => ['module:client_management']], function () {
+        Route::get('add', 'ClientController@index')->name('add');
+        Route::post('store', 'ClientController@store')->name('store');
+        Route::get('list', 'ClientController@list')->name('list');
+        Route::get('preview/{id}', 'ClientController@preview')->name('preview');
+        Route::get('edit/{id}', 'ClientController@edit')->name('edit');
+        Route::post('update/{id}', 'ClientController@update')->name('update');
+        Route::delete('delete/{id}', 'ClientController@delete')->name('delete');
+        Route::post('search', 'ClientController@search')->name('search');
+    });
+    
+   /*---endclients---*/
+
     Route::group(['middleware' => ['admin']], function () {
         Route::get('/fcm/{id}', 'DashboardController@fcm')->name('dashboard');     //test route
         Route::get('/', 'DashboardController@dashboard')->name('dashboard');

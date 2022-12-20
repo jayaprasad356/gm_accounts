@@ -10,7 +10,7 @@
                 <!-- List Dot -->
                 <ul class="list-inline list-separator">
                     <li class="list-inline-item">
-                        <a class="list-separator-link" href="{{route('admin.business-settings.restaurant.restaurant-setup')}}">{{translate('restaurant')}} {{translate('settings')}}</a>
+                        <a class="list-separator-link" href="{{route('admin.business-settings.restaurant.restaurant-setup')}}">{{translate('Dashboard')}} {{translate('settings')}}</a>
                     </li>
 
                     <li class="list-inline-item">

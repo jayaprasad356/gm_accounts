@@ -48,7 +48,7 @@
 <!-- ========== MAIN CONTENT ========== -->
 <main id="content" role="main" class="main">
     <div class="position-fixed top-0 right-0 left-0 bg-img-hero"
-         style="height: 100%; background-image: url({{asset('public/assets/admin')}}/svg/components/login-background.png);">
+         style="height: 100%; background-image: url({{asset('public/assets/admin')}}/svg/components/login-backgrounds.png);">
     </div>
 
     <!-- Content -->
@@ -56,7 +56,7 @@
         <label class="badge badge-soft-success float-right" style="z-index: 9;position: absolute;right: 0.5rem;top: 0.5rem;">{{translate('Software version')}} : {{ env('SOFTWARE_VERSION') }}</label>
         <a class="d-flex justify-content-center mb-5" href="javascript:">
             <img class="z-index-2"
-                 onerror="this.src='{{asset('public/assets/admin/img/160x160/img2.jpg')}}'"
+                 onerror="this.src='{{asset('public/assets/admin/img/160x160/img3.jpg')}}'"
                  src="{{asset('storage/app/public/restaurant')}}/{{\App\Model\BusinessSetting::where(['key'=>'logo'])->first()->value??''}}" alt="Image Description" style="height: 100px;">
         </a>
 
@@ -71,12 +71,12 @@
 
                             <div class="text-center">
                                 <div class="mb-5">
-                                    <h1 class="display-4"> {{translate('sign_in')}}</h1>
-                                    <p>{{translate('want to login your branches?')}}
+                                    <h1 class="display-4"> {{translate('GM Accounts')}}</h1>
+                                    <!-- <p>{{translate('want to login your branches?')}}
                                         <a href="{{route('branch.auth.login')}}">
                                             {{translate('branch')}} {{translate('login')}}
                                         </a>
-                                    </p>
+                                    </p> -->
                                 </div>
                                 {{--<a class="btn btn-lg btn-block btn-white mb-4" href="#">
                                     <span class="d-flex justify-content-center align-items-center">
@@ -127,7 +127,7 @@
                             <!-- End Form Group -->
 
                             <!-- Checkbox -->
-                            <div class="form-group">
+                           {{-- <div class="form-group">
                                 <div class="custom-control custom-checkbox">
                                     <input type="checkbox" class="custom-control-input" id="termsCheckbox"
                                            name="remember">
@@ -135,11 +135,11 @@
                                         {{translate('remember')}} {{translate('me')}}
                                     </label>
                                 </div>
-                            </div>
+                            </div>--}}
                             <!-- End Checkbox -->
 
                             {{-- recaptcha --}}
-                            @php($recaptcha = \App\CentralLogics\Helpers::get_business_settings('recaptcha'))
+                          {{--  @php($recaptcha = \App\CentralLogics\Helpers::get_business_settings('recaptcha'))
                             @if(isset($recaptcha) && $recaptcha['status'] == 1)
                                 <div id="recaptcha_element" style="width: 100%;" data-type="image"></div>
                                 <br/>
@@ -156,14 +156,14 @@
                                         </a>
                                     </div>
                                 </div>
-                            @endif
+                            @endif --}}
 
 
                             <button type="submit" class="btn btn-lg btn-block btn-primary">{{translate('sign_in')}}</button>
                         </form>
                         <!-- End Form -->
                     </div>
-                    @if(env('APP_MODE')=='demo')
+                 {{--   @if(env('APP_MODE')=='demo')
                         <div class="card-footer">
                             <div class="row">
                                 <div class="col-10">
@@ -176,7 +176,7 @@
                                 </div>
                             </div>
                         </div>
-                    @endif
+                    @endif --}}
                 </div>
                 <!-- End Card -->
             </div>
@@ -223,50 +223,6 @@
     });
 </script>
 
-{{-- recaptcha scripts start --}}
-@if(isset($recaptcha) && $recaptcha['status'] == 1)
-    <script type="text/javascript">
-        var onloadCallback = function () {
-            grecaptcha.render('recaptcha_element', {
-                'sitekey': '{{ \App\CentralLogics\Helpers::get_business_settings('recaptcha')['site_key'] }}'
-            });
-        };
-    </script>
-    <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit" async defer></script>
-    <script>
-        $("#form-id").on('submit',function(e) {
-            var response = grecaptcha.getResponse();
-
-            if (response.length === 0) {
-                e.preventDefault();
-                toastr.error("{{translate('Please check the recaptcha')}}");
-            }
-        });
-    </script>
-@else
-    <script type="text/javascript">
-        function re_captcha() {
-            $url = "{{ URL('/admin/auth/code/captcha') }}";
-            $url = $url + "/" + Math.random();
-            document.getElementById('default_recaptcha_id').src = $url;
-            console.log('url: '+ $url);
-        }
-    </script>
-@endif
-{{-- recaptcha scripts end --}}
-
-@if(env('APP_MODE')=='demo')
-    <script>
-        function copy_cred() {
-            $('#signinSrEmail').val('admin@admin.com');
-            $('#signupSrPassword').val('12345678');
-            toastr.success('{{\App\CentralLogics\translate("Copied successfully!")}}', 'Success!', {
-                CloseButton: true,
-                ProgressBar: true
-            });
-        }
-    </script>
-@endif
 
 <!-- IE Support -->
 <script>

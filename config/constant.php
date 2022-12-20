@@ -18,6 +18,11 @@ const INACTIVE = 'inactive';
 
 const MANAGEMENT_SECTION = [
     'dashboard_management' => 'dashboard_management',
+    'client_management' => 'client_management',
+
+
+
+    
     'pos_management' => 'pos_management',
     'order_management' => 'order_management',
     'product_management' => 'product_management',
@@ -28,6 +33,7 @@ const MANAGEMENT_SECTION = [
     'kitchen_management' => 'kitchen_management',
     'table_management' => 'table_management',
     'report_management' => 'report_management',
+   
 ];
 
 //order status
