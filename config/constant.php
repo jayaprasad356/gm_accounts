@@ -19,6 +19,7 @@ const INACTIVE = 'inactive';
 const MANAGEMENT_SECTION = [
     'dashboard_management' => 'dashboard_management',
     'client_management' => 'client_management',
+    'project_management' => 'project_management',
 
 
 

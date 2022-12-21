@@ -32,6 +32,35 @@ Route::group(['namespace' => 'Admin', 'as' => 'admin.'], function () {
     
    /*---endclients---*/
 
+
+    /*projects*/
+    Route::group(['prefix' => 'project', 'as' => 'project.', 'middleware' => ['module:project_management']], function () {
+        Route::get('add', 'ProjectController@index')->name('add');
+        Route::post('store', 'ProjectController@store')->name('store');
+        Route::get('list', 'ProjectController@list')->name('list');
+        Route::get('edit/{id}', 'ProjectController@edit')->name('edit');
+        Route::post('update/{id}', 'ProjectController@update')->name('update');
+        Route::delete('delete/{id}', 'ProjectController@delete')->name('delete');
+        Route::post('search', 'ProjectController@search')->name('search');
+    });
+    
+   /*---endprojects---*/
+
+
+    /*projects*/
+    Route::group(['prefix' => 'income', 'as' => 'income.', 'middleware' => ['module:project_management']], function () {
+        Route::get('add', 'IncomeController@index')->name('add');
+        Route::post('store', 'IncomeController@store')->name('store');
+        Route::get('list', 'IncomeController@list')->name('list');
+        Route::get('edit/{id}', 'IncomeController@edit')->name('edit');
+        Route::post('update/{id}', 'IncomeController@update')->name('update');
+        Route::delete('delete/{id}', 'IncomeController@delete')->name('delete');
+        Route::post('search', 'IncomeController@search')->name('search');
+    });
+    
+   /*---endprojects---*/
+   
+
     Route::group(['middleware' => ['admin']], function () {
         Route::get('/fcm/{id}', 'DashboardController@fcm')->name('dashboard');     //test route
         Route::get('/', 'DashboardController@dashboard')->name('dashboard');

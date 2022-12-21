@@ -60,6 +60,36 @@
                           <!-- End Pages -->
                       @endif
 
+
+                      @if(Helpers::module_permission_check(MANAGEMENT_SECTION['project_management']))
+                          
+                          <!-- Pages -->
+                          <li class="navbar-vertical-aside-has-menu {{Request::is('admin/project/index')?'active':''}}">
+                              <a class="js-navbar-vertical-aside-menu-link nav-link"
+                                 href="{{route('admin.project.list')}}">
+                                  <i class="tio-circle nav-icon"></i>
+                                  <span class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate">
+                                      {{translate('Projects')}}
+                                  </span>
+                              </a>
+                          </li>
+                          <li class="navbar-vertical-aside-has-menu {{Request::is('admin/income/index')?'active':''}}">
+                              <a class="js-navbar-vertical-aside-menu-link nav-link"
+                                 href="{{route('admin.income.list')}}">
+                                  <i class="tio-money nav-icon"></i>
+                                  <span class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate">
+                                      {{translate('Income Details')}}
+                                  </span>
+                              </a>
+                          </li>
+
+                        
+                          <!-- End Pages -->
+                      @endif
+
+                      
+
+
                         <li class="nav-item" style="padding-top: 100px">
                             <div class=""></div>
                         </li>

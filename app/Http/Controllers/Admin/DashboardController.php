@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Model\Admin;
 use App\Model\Branch;
 use App\Model\Client;
+use App\Model\Income;
 use App\Model\Category;
 use App\Model\Order;
 use App\Model\OrderDetail;
@@ -64,6 +65,8 @@ class DashboardController extends Controller
 
         $data['customer'] = User::count();
         $data['clients'] = Client::count();
+        $data['incomes'] =  DB::table('incomes')->sum('amount');
+
 
         $data['product'] = Product::count();
         $data['order'] = Order::count();
