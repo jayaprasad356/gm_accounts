@@ -82,6 +82,15 @@
                                   </span>
                               </a>
                           </li>
+                          <li class="navbar-vertical-aside-has-menu {{Request::is('admin/staff/index')?'active':''}}">
+                              <a class="js-navbar-vertical-aside-menu-link nav-link"
+                                 href="{{route('admin.staff.list')}}">
+                                  <i class="tio-user nav-icon"></i>
+                                  <span class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate">
+                                      {{translate('Staffs')}}
+                                  </span>
+                              </a>
+                          </li>
 
                         
                           <!-- End Pages -->

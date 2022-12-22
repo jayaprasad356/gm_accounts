@@ -47,7 +47,8 @@ Route::group(['namespace' => 'Admin', 'as' => 'admin.'], function () {
    /*---endprojects---*/
 
 
-    /*projects*/
+
+    /*incomes*/
     Route::group(['prefix' => 'income', 'as' => 'income.', 'middleware' => ['module:project_management']], function () {
         Route::get('add', 'IncomeController@index')->name('add');
         Route::post('store', 'IncomeController@store')->name('store');
@@ -58,7 +59,22 @@ Route::group(['namespace' => 'Admin', 'as' => 'admin.'], function () {
         Route::post('search', 'IncomeController@search')->name('search');
     });
     
-   /*---endprojects---*/
+   /*---end-incomedetails---*/
+
+
+   /*staffs*/
+   Route::group(['prefix' => 'staff', 'as' => 'staff.', 'middleware' => ['module:project_management']], function () {
+        Route::get('add', 'StaffController@index')->name('add');
+        Route::post('store', 'StaffController@store')->name('store');
+        Route::get('list', 'StaffController@list')->name('list');
+        Route::get('preview/{id}', 'StaffController@preview')->name('preview');
+        Route::get('edit/{id}', 'StaffController@edit')->name('edit');
+        Route::post('update/{id}', 'StaffController@update')->name('update');
+        Route::delete('delete/{id}', 'StaffController@delete')->name('delete');
+        Route::post('search', 'StaffController@search')->name('search');
+    });
+
+   /*---end-staffs---*/
    
 
     Route::group(['middleware' => ['admin']], function () {
