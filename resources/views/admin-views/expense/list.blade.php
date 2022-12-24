@@ -1,6 +1,6 @@
 @extends('layouts.admin.app')
 
-@section('title', translate('Project List'))
+@section('title', translate('Expense details List'))
 
 @push('css_or_js')
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -13,30 +13,17 @@
             <div class="row align-items-center">
              
                     <div class="col-12 pb-4 flex-start">
-                        <h1 class=""><i class="tio-filter-list"></i> {{translate('Project')}} {{translate('list')}}</h1>
-                        <h1 class="text-primary">({{ $projects->total() }})</h1>
+                        <h1 class=""><i class="tio-filter-list"></i> {{translate('Expense')}} {{translate('details')}}</h1>
+                        <h1 class="text-primary">({{ $expenses->total() }})</h1>
                     </div>
-                   
+                   <!---filter by month --->
                     <div class="col-md-3 col-sm-4">
-                        <!-- Select -->
                         <label class="input-label"
-                                            for="exampleFormControlSelect1">{{translate('select')}} {{translate('client')}}
+                                            for="exampleFormControlSelect1">{{translate('select')}} {{translate('month')}}
                          </label>
-                        <select id="client_id" class="js-select2-custom"
-                                            data-hs-select2-options='{
-                                              "minimumResultsForSearch": "Infinity",
-                                              "customClass": "custom-select custom-select-sm text-capitalize"
-                                            }'>
-                            <option disabled>--- {{translate('select')}} {{translate('client')}} ---</option>
-                            <option value="">{{translate('all')}}</option>
-                            @foreach(\App\Model\Client::all() as $client)
-                                <option
-                                    value="{{$client['id']}}">{{$client['name']}}</option>
-                            @endforeach
-                        </select>
-                        <!-- End Select -->
+                         <input type="month" name="month" id="month" class="form-control" placeholder="{{translate('month')}}">
                     </div>
-                   
+                   <!---end filter---->
      
             </div>
         </div>
@@ -62,8 +49,8 @@
                             </form>
                         </div>
                         <div class="col-sm-6 text-right">
-                            <a href="{{route('admin.project.add')}}" class="btn btn-primary pull-right"><i
-                                    class="tio-add-circle"></i> {{translate('add project')}}</a>
+                            <a href="{{route('admin.expense.add')}}" class="btn btn-primary pull-right"><i
+                                    class="tio-add-circle"></i> {{translate('add expense')}}</a>
                         </div>
                     </div>
                     <!-- End Header -->
@@ -74,35 +61,35 @@
                             <thead class="thead-light">
                             <tr>
                                 <th>{{translate('#')}}</th>
-                                <th >{{translate('client name')}}</th>
-                                <th>{{translate('project')}}</th>
-                                <th>{{translate('date')}}</th>
-                                <th>{{translate('budget')}}</th>
-                                <th>{{translate('description')}}</th>
+                                <th >{{translate('month')}}</th>
+                                <th>{{translate('Total Grocery Expense')}}</th>
+                                <th>{{translate('Room rent')}}</th>
+                                <th>{{translate('Bike Expense')}}</th>
+                                <th>{{translate('total')}}</th>
                                 <th>{{translate('action')}}</th>
                             </tr>
                             </thead>
 
                             <tbody id="set-rows">
-                            @foreach($projects as $key=>$project)
+                            @foreach($expenses as $key=>$expense)
                                 <tr>
-                                    <td>{{$projects->firstitem()+$key}}</td>
+                                    <td>{{$expenses->firstitem()+$key}}</td>
                                     <td>
                                         <span class="d-block font-size-sm text-body">
-                                            {{$project['client_name']}}
+                                            {{$expense['month']}}
                                         </span>
                                     </td>
                                     <td>
-                                        <label class="badge badge-soft-info">{{$project['name']}}</label>
+                                        {{$expense['grocery_expense']}}
                                     </td>
                                     <td>
-                                        {{$project['date']}}
+                                        {{$expense['room_rent']}}
                                     </td>
                                     <td>
-                                        {{$project['budget']}}
+                                        {{$expense['bike_expense']}}
                                     </td>
                                     <td>
-                                        {{$project['description']}}
+                                        {{$expense['total']}}
                                     </td> 
                                     <td>
                                         <!-- Dropdown -->
@@ -114,11 +101,11 @@
                                             </button>
                                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                                 <a class="dropdown-item"
-                                                   href="{{route('admin.project.edit',[$project['id']])}}"> <i class="tio-edit"></i>{{translate('edit')}}</a>
+                                                   href="{{route('admin.expense.edit',[$expense['id']])}}"> <i class="tio-edit"></i>{{translate('edit')}}</a>
                                                 <a class="dropdown-item" href="javascript:"
-                                                   onclick="form_alert('project-{{$project['id']}}','{{translate('Want to remove this information ?')}}')"><i class="tio-remove-from-trash"></i>{{translate('delete')}}</a>
-                                                <form action="{{route('admin.project.delete',[$project['id']])}}"
-                                                      method="post" id="project-{{$project['id']}}">
+                                                   onclick="form_alert('expense-{{$expense['id']}}','{{translate('Want to remove this information ?')}}')"><i class="tio-remove-from-trash"></i>{{translate('delete')}}</a>
+                                                <form action="{{route('admin.expense.delete',[$expense['id']])}}"
+                                                      method="post" id="expense-{{$expense['id']}}">
                                                     @csrf @method('delete')
                                                 </form>
                                             </div>
@@ -133,7 +120,7 @@
                         <div class="page-area">
                             <table>
                                 <tfoot>
-                                {!! $projects->links() !!}
+                                {!! $expenses->links() !!}
                                 </tfoot>
                             </table>
                         </div>
@@ -158,7 +145,7 @@
                 }
             });
             $.post({
-                url: '{{route('admin.project.search')}}',
+                url: '{{route('admin.expense.search')}}',
                 data: formData,
                 cache: false,
                 contentType: false,
@@ -178,34 +165,16 @@
     </script>
      <script>
         $(document).on('ready', function () {
-            // INITIALIZATION OF DATATABLES
-            // =======================================================
-            // var datatable = $.HSCore.components.HSDatatables.init($('#columnSearchDatatable'));
 
             var datatable = $('.table').DataTable({
                 "paging": false
             });
 
-            // $('#column1_search').on('keyup', function () {
-            //     datatable
-            //         .columns(1)
-            //         .search(this.value)
-            //         .draw();
-            // });
-
-
-            $('#client_id').on('change', function () {
+            $('#month').on('change', function () {
                 datatable
-                    .columns(2)
+                    .columns(1)
                     .search(this.value)
                     .draw();
-            });
-
-
-            // INITIALIZATION OF SELECT2
-            // =======================================================
-            $('.js-select2-custom').each(function () {
-                var select2 = $.HSCore.components.HSSelect2.init($(this));
             });
         });
     </script>

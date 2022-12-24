@@ -75,6 +75,20 @@ Route::group(['namespace' => 'Admin', 'as' => 'admin.'], function () {
     });
 
    /*---end-staffs---*/
+
+
+      /*expense details*/
+      Route::group(['prefix' => 'expense', 'as' => 'expense.', 'middleware' => ['module:project_management']], function () {
+        Route::get('addexpense', 'ExpenseController@index')->name('add');
+        Route::post('store', 'ExpenseController@store')->name('store');
+        Route::get('list', 'ExpenseController@list')->name('list');
+        Route::get('edit/{id}', 'ExpenseController@edit')->name('edit');
+        Route::post('update/{id}', 'ExpenseController@update')->name('update');
+        Route::delete('delete/{id}', 'ExpenseController@delete')->name('delete');
+        Route::post('search', 'ExpenseController@search')->name('search');
+    });
+
+   /*---end-expense details---*/
    
 
     Route::group(['middleware' => ['admin']], function () {

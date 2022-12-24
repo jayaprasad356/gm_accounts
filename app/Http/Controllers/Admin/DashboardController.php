@@ -67,6 +67,8 @@ class DashboardController extends Controller
         $data['clients'] = Client::count();
         $data['incomes'] =  DB::table('incomes')->sum('amount');
 
+        $currentYear = Carbon::now()->year;
+        $data['expenses'] =  DB::table('expenses')->where('month',$currentYear)->sum('total');
 
         $data['product'] = Product::count();
         $data['order'] = Order::count();

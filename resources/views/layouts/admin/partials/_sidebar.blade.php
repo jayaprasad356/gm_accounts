@@ -91,6 +91,15 @@
                                   </span>
                               </a>
                           </li>
+                          <li class="navbar-vertical-aside-has-menu {{Request::is('admin/expense/index')?'active':''}}">
+                              <a class="js-navbar-vertical-aside-menu-link nav-link"
+                                 href="{{route('admin.expense.list')}}">
+                                  <i class="tio-wallet nav-icon"></i>
+                                  <span class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate">
+                                      {{translate('Expenses')}}
+                                  </span>
+                              </a>
+                          </li>
 
                         
                           <!-- End Pages -->
