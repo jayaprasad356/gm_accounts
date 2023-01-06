@@ -47,6 +47,19 @@ Route::group(['namespace' => 'Admin', 'as' => 'admin.'], function () {
    /*---endprojects---*/
 
 
+      /*projectcosts*/
+      Route::group(['prefix' => 'project_cost', 'as' => 'project_cost.', 'middleware' => ['module:project_management']], function () {
+        Route::get('add', 'ProjectcostController@index')->name('add');
+        Route::post('store', 'ProjectcostController@store')->name('store');
+        Route::get('list', 'ProjectcostController@list')->name('list');
+        Route::get('edit/{id}', 'ProjectcostController@edit')->name('edit');
+        Route::post('update/{id}', 'ProjectcostController@update')->name('update');
+        Route::delete('delete/{id}', 'ProjectcostController@delete')->name('delete');
+        Route::post('search', 'ProjectcostController@search')->name('search');
+    });
+    
+   /*---endprojects---*/
+
 
     /*incomes*/
     Route::group(['prefix' => 'income', 'as' => 'income.', 'middleware' => ['module:project_management']], function () {

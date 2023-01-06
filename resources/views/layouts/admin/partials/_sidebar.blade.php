@@ -73,6 +73,15 @@
                                   </span>
                               </a>
                           </li>
+                          <li class="navbar-vertical-aside-has-menu {{Request::is('admin/project_cost/index')?'active':''}}">
+                              <a class="js-navbar-vertical-aside-menu-link nav-link"
+                                 href="{{route('admin.project_cost.list')}}">
+                                  <i class="tio-circle nav-icon"></i>
+                                  <span class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate">
+                                      {{translate('ProjectCosts')}}
+                                  </span>
+                              </a>
+                          </li>
                           <li class="navbar-vertical-aside-has-menu {{Request::is('admin/income/index')?'active':''}}">
                               <a class="js-navbar-vertical-aside-menu-link nav-link"
                                  href="{{route('admin.income.list')}}">
