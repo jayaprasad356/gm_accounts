@@ -35,8 +35,7 @@ class IncomeController extends Controller
                 foreach ($key as $value) {
                     $q->orWhere('incomes.id', 'like', "%{$value}%")
                         ->orWhere('incomes.amount', 'like', "%{$value}%")
-                        ->orWhere('projects.name', 'like', "%{$value}%")
-                        ->orWhere('clients.name', 'like', "%{$value}%");
+                        ->orWhere('projects.name', 'like', "%{$value}%");
                 }
             });
             $query_param = ['search' => $request['search']];
@@ -44,9 +43,8 @@ class IncomeController extends Controller
             $income = new Income();
         }
 
-        $incomes = $income->join('clients', 'incomes.client_id', '=','clients.id')
-        ->join('projects', 'incomes.project_id', '=','projects.id')
-        ->select('incomes.id AS id','projects.name AS project_name','clients.name AS client_name','incomes.*')->latest()->paginate(Helpers::getPagination())->appends($query_param);
+        $incomes = $income->join('projects', 'incomes.project_id', '=','projects.id')
+        ->select('incomes.id AS id','projects.name AS project_name','incomes.*')->latest()->paginate(Helpers::getPagination())->appends($query_param);
         return view('admin-views.income.list', compact('incomes', 'search'));
     }
 
@@ -68,13 +66,11 @@ class IncomeController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'client_id' => 'required',
             'project_id' => 'required',
             'amount' => 'required',
 
 
         ], [
-            'client_id.required' => translate('Client Name is required!'),
             'date.required' => translate('Date is required!'),
             'project_id.required' => translate('Project Name is required!'),
 
@@ -83,10 +79,10 @@ class IncomeController extends Controller
         $id_img_names = [];
 
         $income = new Income();
-        $income->client_id = $request->client_id;
         $income->project_id = $request->project_id;
         $income->date =Carbon::now("Asia/Kolkata")->format('Y-m-d');
         $income->amount = $request->amount;
+        $income->image = Helpers::upload('income/', 'png', $request->file('image'));
         $income->save();
 
         Toastr::success(translate('Income Details added successfully!'));
@@ -102,22 +98,20 @@ class IncomeController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'client_id' => 'required',
             'amount' => 'required',
             'project_id' => 'required',
 
         ], [
-            'client_id.required' => translate('Client Name is required!'),
             'date.required' => translate('Date is required!'),
             'project_id.required' => translate('Project Name is required!')
         ]);
 
         $income = Income::find($id);
 
-        $income->client_id = $request->client_id;
         $income->project_id = $request->project_id;
         $income->date = Carbon::now("Asia/Kolkata")->format('Y-m-d');
         $income->amount = $request->amount;
+        $income->image = $request->has('image') ? Helpers::update('income/', $income->image, 'png', $request->file('image')) : $income->image;
         $income->save();
 
         Toastr::success(translate('Income Details updated successfully!'));

@@ -59,7 +59,7 @@
                             </tr>
                             <tr>
                                 <th style="width: 200px">Github Link</th>
-                                <td> <a href="{{$staff['github']}}">{{$staff['github']}}</a></td>
+                                <td> <a target="_blank" href="{{$staff['github']}}">{{$staff['github']}}</a></td>
                             </tr>
                 </table>
             </div>

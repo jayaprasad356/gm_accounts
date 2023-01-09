@@ -103,6 +103,13 @@ Route::group(['namespace' => 'Admin', 'as' => 'admin.'], function () {
 
    /*---end-expense details---*/
    
+      /*expense details*/
+      Route::group(['prefix' => 'balance', 'as' => 'balance.', 'middleware' => ['module:project_management']], function () {
+        Route::get('list', 'ExpenseController@balancelist')->name('list');
+        Route::post('search', 'ExpenseController@balancesearch')->name('search');
+    });
+
+   /*---end-expense details---*/
 
     Route::group(['middleware' => ['admin']], function () {
         Route::get('/fcm/{id}', 'DashboardController@fcm')->name('dashboard');     //test route

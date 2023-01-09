@@ -96,7 +96,6 @@
                             <tr>
                                 <th>{{translate('#')}}</th>
                                 <th >{{translate('date')}}</th>
-                                <th >{{translate('client name')}}</th>
                                 <th>{{translate('project name')}}</th>
                                 <th>{{translate('amount')}}</th>
                                 <th>{{translate('action')}}</th>
@@ -110,11 +109,6 @@
                                     <td>
                                         <span class="d-block font-size-sm text-body">
                                             {{$income['date']}}
-                                        </span>
-                                    </td>
-                                    <td>
-                                        <span class="d-block font-size-sm text-body">
-                                            {{$income['client_name']}}
                                         </span>
                                     </td>
                                     <td>

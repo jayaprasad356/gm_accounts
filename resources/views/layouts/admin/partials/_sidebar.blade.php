@@ -109,6 +109,15 @@
                                   </span>
                               </a>
                           </li>
+                          <li class="navbar-vertical-aside-has-menu {{Request::is('admin/balance/index')?'active':''}}">
+                              <a class="js-navbar-vertical-aside-menu-link nav-link"
+                                 href="{{route('admin.balance.list')}}">
+                                  <i class="tio-wallet nav-icon"></i>
+                                  <span class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate">
+                                      {{translate('Balance')}}
+                                  </span>
+                              </a>
+                          </li>
 
                         
                           <!-- End Pages -->

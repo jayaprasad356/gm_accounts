@@ -77,7 +77,6 @@
                                 <th >{{translate('client name')}}</th>
                                 <th>{{translate('project')}}</th>
                                 <th>{{translate('date')}}</th>
-                                <th>{{translate('budget')}}</th>
                                 <th>{{translate('description')}}</th>
                                 <th>{{translate('action')}}</th>
                             </tr>
@@ -97,9 +96,6 @@
                                     </td>
                                     <td>
                                         {{$project['date']}}
-                                    </td>
-                                    <td>
-                                        {{$project['budget']}}
                                     </td>
                                     <td>
                                         {{$project['description']}}

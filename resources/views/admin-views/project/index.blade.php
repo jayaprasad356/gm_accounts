@@ -62,13 +62,6 @@
                                        required>
                             </div>
                         </div>
-                        <div class="col-md-6 col-12">
-                            <div class="form-group">
-                                <label class="input-label" for="exampleFormControlInput1">{{translate('budget')}}</label>
-                                <input type="number" name="budget" class="form-control" placeholder="{{translate('budget')}}"
-                                       required>
-                            </div>
-                        </div>
                     </div>
                     <div class="row">
                        <div class="col-md-8 col-12">

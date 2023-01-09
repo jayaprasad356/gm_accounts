@@ -68,7 +68,6 @@ class ProjectController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            'budget' => 'required',
             'date' => 'required',
             'description' => 'required',
 
@@ -86,7 +85,6 @@ class ProjectController extends Controller
         $project->client_id = $request->client_id;
         $project->name = $request->name;
         $project->date = $request->date;
-        $project->budget = $request->budget;
         $project->description = $request->description;
         $project->save();
 
@@ -119,7 +117,6 @@ class ProjectController extends Controller
         $project->client_id = $request->client_id;
         $project->name = $request->name;
         $project->date = $request->date;
-        $project->budget = $request->budget;
         $project->description = $request->description;
         $project->save();
 

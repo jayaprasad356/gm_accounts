@@ -32,19 +32,6 @@
                 <form action="{{route('admin.income.store')}}" method="post" enctype="multipart/form-data">
                     @csrf
                     <div class="row">
-                         <div class="col-12 col-md-6">
-                                <div class="form-group">
-                                    <label class="input-label"
-                                            for="exampleFormControlSelect1">{{translate('Client')}} {{translate('name')}}
-                                        <span class="input-label-secondary">*</span></label>
-                                    <select id="exampleFormControlSelect1" name="client_id" class="form-control" required>
-                                        <option value="">-select-</option>
-                                        @foreach(\App\Model\Client::get() as $client)
-                                            <option value="{{$client['id']}}">{{$client['name']}}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                        </div>
                         <div class="col-12 col-md-6">
                                 <div class="form-group">
                                     <label class="input-label"
@@ -58,9 +45,6 @@
                                     </select>
                                 </div>
                         </div>
-                    </div>
-
-                    <div class="row">
                         <div class="col-md-6 col-12">
                             <div class="form-group">
                                 <label class="input-label" for="exampleFormControlInput1">{{translate('amount')}}</label>
@@ -69,6 +53,19 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="form-group">
+                                <label>{{translate('Receipt')}} {{translate('image')}}</label><small style="color: red">* ( {{translate('ratio')}} 1:1 )</small>
+                                <div class="custom-file">
+                                    <input type="file" name="image" id="customFileEg1" class="custom-file-input"
+                                        accept=".jpg, .png, .jpeg, .gif, .bmp, .tif, .tiff|image/*" required>
+                                    <label class="custom-file-label" for="customFileEg1">{{translate('choose')}} {{translate('file')}}</label>
+                                </div>
+                                <center>
+                                    <img style="height: 200px;border: 1px solid; border-radius: 10px;margin-top:10px;" id="viewer1"
+                                        src="{{asset('public/assets/admin/img/400x400/img2.jpg')}}" alt="Feceipt image"/>
+                                </center>
+                   </div>
                     <button type="submit" class="btn btn-primary">{{translate('submit')}}</button>
                     <input type="reset" onClick="refreshPage()" class="btn-warning btn" value="Clear" />
                 </form>
@@ -77,3 +74,24 @@
     </div>
 
 @endsection
+
+@push('script_2')
+    <script>
+        function readURL(input, viewer_id) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#'+viewer_id).attr('src', e.target.result);
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+        $("#customFileEg1").change(function () {
+            readURL(this, 'viewer1');
+        });
+    </script>
+
+   
+@endpush

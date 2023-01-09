@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 06, 2023 at 12:21 PM
--- Server version: 10.4.24-MariaDB
--- PHP Version: 7.4.29
+-- Generation Time: Jan 09, 2023 at 06:07 PM
+-- Server version: 10.4.22-MariaDB
+-- PHP Version: 7.4.27
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -228,7 +228,7 @@ INSERT INTO `business_settings` (`id`, `key`, `value`, `created_at`, `updated_at
 (42, 'paystack', '{\"status\":\"0\",\"publicKey\":null,\"secretKey\":null,\"paymentUrl\":\"https:\\/\\/api.paystack.co\",\"merchantEmail\":null}', '2021-05-04 14:38:35', '2021-07-25 14:39:12'),
 (43, 'time_zone', 'Asia/Almaty', NULL, NULL),
 (44, 'maintenance_mode', '0', NULL, NULL),
-(45, 'currency_symbol_position', 'right', NULL, NULL),
+(45, 'currency_symbol_position', 'left', NULL, NULL),
 (46, 'language', '[{\"id\":1,\"name\":\"en\",\"direction\":\"ltr\",\"code\":\"en\",\"status\":1,\"default\":true}]', NULL, '2022-06-07 10:59:59'),
 (47, 'self_pickup', '1', NULL, NULL),
 (48, 'delivery', '1', NULL, NULL),
@@ -812,9 +812,9 @@ CREATE TABLE `failed_jobs` (
 CREATE TABLE `incomes` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `date` date DEFAULT NULL,
-  `client_id` bigint(20) DEFAULT NULL,
   `project_id` int(11) DEFAULT NULL,
   `amount` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `image` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -823,9 +823,10 @@ CREATE TABLE `incomes` (
 -- Dumping data for table `incomes`
 --
 
-INSERT INTO `incomes` (`id`, `date`, `client_id`, `project_id`, `amount`, `created_at`, `updated_at`) VALUES
-(1, '2022-12-20', 1, 1, '5000', '2022-12-20 07:04:44', '2022-12-20 07:05:07'),
-(2, '2022-12-21', 2, 2, '3470', '2022-12-21 05:36:42', '2022-12-21 05:36:42');
+INSERT INTO `incomes` (`id`, `date`, `project_id`, `amount`, `image`, `created_at`, `updated_at`) VALUES
+(1, '2022-12-20', 1, '5000', NULL, '2022-12-20 07:04:44', '2022-12-20 07:05:07'),
+(2, '2023-01-09', 2, '4000', '2023-01-09-63bbc53a5ae41.png', '2022-12-21 05:36:42', '2023-01-09 11:09:56'),
+(3, '2023-01-09', 2, '3000', '2023-01-09-63bbe29e1a420.png', '2023-01-09 10:17:10', '2023-01-09 10:17:10');
 
 -- --------------------------------------------------------
 
@@ -1275,7 +1276,6 @@ CREATE TABLE `projects` (
   `client_id` int(11) DEFAULT NULL,
   `name` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `date` date DEFAULT NULL,
-  `budget` int(11) DEFAULT NULL,
   `description` varchar(300) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -1285,9 +1285,9 @@ CREATE TABLE `projects` (
 -- Dumping data for table `projects`
 --
 
-INSERT INTO `projects` (`id`, `client_id`, `name`, `date`, `budget`, `description`, `created_at`, `updated_at`) VALUES
-(1, 1, 'Goldplus', '2022-12-15', 4500, 'This is our first project to grow in our life', '2022-12-20 06:07:15', '2022-12-20 06:14:11'),
-(2, 2, 'Autobot', '2022-12-30', 3000, 'This is a bike services,products selling app & Bike Buy and resell', '2022-12-21 05:36:12', '2022-12-21 06:11:24');
+INSERT INTO `projects` (`id`, `client_id`, `name`, `date`, `description`, `created_at`, `updated_at`) VALUES
+(1, 1, 'Goldplus', '2022-12-15', 'This is our first project to grow in our life', '2022-12-20 06:07:15', '2022-12-20 06:14:11'),
+(2, 2, 'Autobot', '2022-12-30', 'This is a bike services,products selling app & Bike Buy and resell', '2022-12-21 05:36:12', '2022-12-21 06:11:24');
 
 -- --------------------------------------------------------
 
@@ -1310,7 +1310,8 @@ CREATE TABLE `project_costs` (
 --
 
 INSERT INTO `project_costs` (`id`, `date`, `project_id`, `amount`, `description`, `created_at`, `updated_at`) VALUES
-(1, '2023-01-12', 2, 10000, 'This app is based on olx india app and the bike products will sell through online.The endtime of this project is 2022-01-06', '2023-01-06 09:45:59', '2023-01-06 09:45:59');
+(1, '2023-01-12', 2, 10000, 'This app is based on olx india app and the bike products will sell through online.The endtime of this project is 2022-01-06', '2023-01-06 09:45:59', '2023-01-06 09:45:59'),
+(2, '2023-01-10', 1, 15000, 'gdfg', '2023-01-09 10:15:35', '2023-01-09 10:15:35');
 
 -- --------------------------------------------------------
 
@@ -1988,7 +1989,7 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT for table `incomes`
 --
 ALTER TABLE `incomes`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `messages`
@@ -2072,7 +2073,7 @@ ALTER TABLE `projects`
 -- AUTO_INCREMENT for table `project_costs`
 --
 ALTER TABLE `project_costs`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `reviews`

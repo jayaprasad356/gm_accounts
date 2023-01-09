@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\CentralLogics\Helpers;
 use App\Http\Controllers\Controller;
+use App\Model\Project;
 use App\Model\Expense;
 use App\Model\Translation;
 use Brian2694\Toastr\Facades\Toastr;
@@ -101,5 +102,34 @@ class ExpenseController extends Controller
         $expense->delete();
         Toastr::success(translate('Expense Details removed Successfully!'));
         return back();
+    }
+
+
+    public function balancelist(Request $request)
+    {
+        $query_param = [];
+        $search = $request['search'];
+        // if ($request->has('search')) {
+        //     $key = explode(' ', $request['search']);
+        //     $balance = DB::where(function ($q) use ($key) {
+        //         foreach ($key as $value) {
+        //             $q->orWhere('project.name', 'like', "%{$value}%")
+        //                 ->orWhere('projects.date', 'like', "%{$value}%")
+        //                 ->orWhere('projects.description', 'like', "%{$value}%")
+        //                 ->orWhere('clients.name', 'like', "%{$value}%");
+        //         }
+        //     });
+        //     $query_param = ['search' => $request['search']];
+        // }else{
+        //     $project = new Project();
+        // }
+
+        $balances = DB::table('project_costs')
+        ->join('projects', 'project_costs.project_id', '=','projects.id')
+        ->join('incomes', 'incomes.project_id', '=','project_costs.project_id')
+        ->select('project_costs.project_id AS project_id','projects.name AS project_name','project_costs.amount AS total_amount',DB::raw('SUM(incomes.amount) AS income'),DB::raw('project_costs.amount - SUM(incomes.amount) AS balance'))
+        ->groupBy('project_costs.project_id','projects.name','project_costs.amount')
+        ->paginate(Helpers::getPagination())->appends($query_param);
+        return view('admin-views.balance.list', compact('balances', 'search'));
     }
 }
